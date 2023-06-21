@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
-import { ConfigModule } from '@nestjs/config';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { ConfigModule } from '@nestjs/config';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      synchronize: true,
+      synchronize: false,
       autoLoadEntities: true,
       charset: 'utf8mb4',
       logging: true,
@@ -27,6 +28,7 @@ import { ConfigModule } from '@nestjs/config';
     UsersModule,
     PostsModule,
     AuthModule,
+    CommonModule,
   ],
   controllers: [],
   providers: [],

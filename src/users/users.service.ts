@@ -1,9 +1,8 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { UserEntity } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
-import { SignupDto } from 'src/auth/dto/login.dto';
 
 @Injectable()
 export class UsersService {
@@ -12,7 +11,7 @@ export class UsersService {
     private usersRepository: Repository<UserEntity>,
   ) {}
 
-  async createUser(createUserDto: SignupDto) {
+  async createUser(createUserDto: CreateUserDto) {
     const now = new Date();
 
     const user = new UserEntity();
