@@ -1,12 +1,14 @@
 import { IsDate, IsEmail, Matches } from 'class-validator';
 import { PostsEntity } from 'src/posts/entities/posts.entity';
 import {
+  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
   OneToMany,
   PrimaryColumn,
 } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Entity('User')
 export class UserEntity {
@@ -32,4 +34,9 @@ export class UserEntity {
 
   @OneToMany(() => PostsEntity, (post) => post.writerId)
   posts: PostsEntity[];
+
+  @BeforeInsert()
+  private beforeInsert() {
+    this.password = bcrypt.hashSync(this.password, 10);
+  }
 }
