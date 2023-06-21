@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostsService } from './posts.service';
@@ -22,9 +23,10 @@ export class PostsController {
     return await this.postsService.create(userId, createPostDto);
   }
 
-  @Get() // 수정 예정
-  async read() {
-    return await this.postsService.read();
+  @Get()
+  async read(@Query('page') page = 1) {
+    // 쿼리문을 요청하지 않은 디폴트에선 첫 번째 페이지만 불러올 것.
+    return await this.postsService.paginate(page);
   }
 
   @Get(':id')

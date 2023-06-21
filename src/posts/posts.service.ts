@@ -25,8 +25,22 @@ export class PostsService {
     await this.postsRepository.save(post);
   }
 
-  async read() {
-    return await this.postsRepository.find(); //10페이지씩 보이게 수정 예정
+  async paginate(page = 1) {
+    const take = 10; // 10 페이지씩 조회
+
+    const [posts, total] = await this.postsRepository.findAndCount({
+      take, // limit
+      skip: (page - 1) * take, // offset
+    });
+
+    return {
+      data: posts,
+      meta: {
+        total,
+        page,
+        last_page: Math.ceil(total / take),
+      },
+    };
   }
 
   async readById(postId: string) {
