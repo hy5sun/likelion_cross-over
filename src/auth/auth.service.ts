@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { UsersService } from 'src/users/users.service';
 import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
+import { Request, Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -45,7 +46,7 @@ export class AuthService {
     return;
   }
 
-  async logIn(loginDto: LoginDto, res) {
+  async validate(loginDto: LoginDto) {
     const user = await this.usersService.findById(loginDto.id);
 
     if (!user) {
@@ -57,6 +58,12 @@ export class AuthService {
       throw new UnprocessableEntityException('비밀번호가 일치하지 않습니다.');
     }
 
+    return user;
+  }
+
+  async logIn(loginDto: LoginDto, res: Response) {
+    const user = await this.validate(loginDto);
+
     await this.getRefreshToken({ user, res });
 
     const jwt = await this.getAccessToken({ user });
@@ -64,9 +71,9 @@ export class AuthService {
     return res.status(200).send(jwt);
   }
 
-  async logOut(req, res) {
+  async logOut(req: Request, res: Response) {
     req.logOut();
-    req.clearCookie('connect.sid', { httpOnly: true });
+    req.clearCookie('refreshToken', { httpOnly: true });
     res.send('OK');
   }
 }
