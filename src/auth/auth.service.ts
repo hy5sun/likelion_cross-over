@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { UsersService } from 'src/users/users.service';
 import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -71,9 +71,8 @@ export class AuthService {
     return res.status(200).send(jwt);
   }
 
-  async logOut(req: Request, res: Response) {
-    req.logOut();
-    req.clearCookie('refreshToken', { httpOnly: true });
+  async logOut(res: Response) {
+    res.clearCookie('refreshToken', { path: '/auth' });
     res.send('OK');
   }
 }
