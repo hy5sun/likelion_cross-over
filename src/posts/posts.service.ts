@@ -73,7 +73,7 @@ export class PostsService {
     }
 
     // 토큰을 기준으로 판단해야함...
-    if (userId === null) {
+    if (!userId) {
       throw new UnauthorizedException('로그인이 되어 있지 않습니다.');
     }
 
