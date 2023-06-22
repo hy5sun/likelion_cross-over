@@ -1,4 +1,8 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import {
+  HttpStatus,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from 'src/users/users.service';
@@ -15,6 +19,9 @@ export class AuthService {
 
   async signUp(signupDto: SignupDto) {
     await this.usersService.createUser(signupDto);
+    return {
+      statusCode: HttpStatus.CREATED,
+    };
   }
 
   async getAccessToken({ user }): Promise<string> {
@@ -73,6 +80,6 @@ export class AuthService {
 
   async logOut(res: Response) {
     res.clearCookie('refreshToken', { path: '/auth' });
-    res.send('OK');
+    res.send(`statusCode: ${HttpStatus.CREATED}`);
   }
 }

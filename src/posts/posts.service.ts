@@ -1,4 +1,5 @@
 import {
+  HttpStatus,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -32,7 +33,12 @@ export class PostsService {
     post.writerId = userId;
 
     await this.postsRepository.save(post);
+
+    return {
+      statusCode: HttpStatus.CREATED,
+    };
   }
+  c;
 
   async paginate(page = 1) {
     const take = 10; // 10 페이지씩 조회
@@ -44,6 +50,7 @@ export class PostsService {
     });
 
     return {
+      statusCode: HttpStatus.OK,
       data: posts,
       meta: {
         total,
@@ -62,7 +69,10 @@ export class PostsService {
       throw new NotFoundException('해당 id의 게시물을 찾을 수 없습니다.');
     }
 
-    return foundPost;
+    return {
+      statusCode: HttpStatus.OK,
+      data: [foundPost],
+    };
   }
 
   async deleteById(userId: string, postId: string) {
@@ -82,5 +92,9 @@ export class PostsService {
     }
 
     await this.postsRepository.softDelete({ id: postId });
+
+    return {
+      statusCode: HttpStatus.OK,
+    };
   }
 }
