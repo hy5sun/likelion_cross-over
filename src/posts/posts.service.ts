@@ -40,6 +40,7 @@ export class PostsService {
     const [posts, total] = await this.postsRepository.findAndCount({
       take, // limit
       skip: (page - 1) * take, // offset
+      order: { createdAt: 'DESC' },
     });
 
     return {
