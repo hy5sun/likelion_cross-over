@@ -29,13 +29,16 @@ export class PostsController {
     return await this.postsService.paginate(page);
   }
 
-  @Get(':id')
+  @Get(':postId')
   async readById(@Param('postId') postId: string) {
     return await this.postsService.readById(postId);
   }
 
-  @Delete(':id')
-  async deleteById(@Param('postId') postId: string) {
-    return await this.postsService.deleteById(postId);
+  @Delete(':postId')
+  async deleteById(
+    @Headers('userId') userId: string,
+    @Param('postId') postId: string,
+  ) {
+    return await this.postsService.deleteById(userId, postId);
   }
 }
