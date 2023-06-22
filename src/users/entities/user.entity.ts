@@ -13,7 +13,7 @@ import * as bcrypt from 'bcrypt';
 @Entity('User')
 export class UserEntity {
   @PrimaryColumn({ unique: true })
-  @Matches(/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{5,9}$/)
+  @Matches(/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{5,10}$/)
   id: string;
 
   @CreateDateColumn()
@@ -25,7 +25,7 @@ export class UserEntity {
 
   @Column()
   @Matches(
-    /^(?=.*[a-zA-Z])(?=.*[~!@#$%^&*_\-+=`|\(){}[\]:;"'<>,.?/])(?=.*[0-9]).{8,13}$/,
+    /^(?=.*[a-zA-Z])(?=.*[~!@#$%^&*_\-+=`|\(){}[\]:;"'<>,.?/])(?=.*[0-9]).{8,14}$/,
   )
   password: string;
 
