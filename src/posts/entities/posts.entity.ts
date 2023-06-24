@@ -19,15 +19,12 @@ export class PostsEntity {
   @Column()
   content: string;
 
-  @Column()
-  writerId: string;
-
   @CreateDateColumn()
   createdAt: Date;
 
   @DeleteDateColumn()
   deletedAt: Date | null;
 
-  @ManyToOne(() => UserEntity, (user) => user.posts)
-  user: UserEntity;
+  @ManyToOne(() => UserEntity, (writer) => writer.posts)
+  writer: UserEntity;
 }

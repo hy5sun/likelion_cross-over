@@ -32,7 +32,7 @@ export class UserEntity {
   @CreateDateColumn()
   policyAgreementDate: Date;
 
-  @OneToMany(() => PostsEntity, (post) => post.writerId)
+  @OneToMany(() => PostsEntity, (post) => post.writer)
   posts: PostsEntity[];
 
   @BeforeInsert()
