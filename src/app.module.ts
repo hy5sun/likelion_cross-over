@@ -19,7 +19,7 @@ import { CommonModule } from './common/common.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      synchronize: true,
+      synchronize: false,
       autoLoadEntities: true,
       charset: 'utf8mb4',
       logging: true,
